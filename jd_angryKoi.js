@@ -3,7 +3,7 @@
 备注：高速并发请求，专治偷助力。在kois环境变量中填入需要助力的pt_pin，有多个请用@符号连接
 TG学习交流群：https://t.me/cdles
 #愤怒的锦鲤
-0 0 * * * https://raw.githubusercontent.com/cdle/jd_study/main/jd_angryKoi.js
+10 5 * * * https://raw.githubusercontent.com/wql70255/QL570/main/jd_angryKoi.js
 */
 const $ = Env("愤怒的锦鲤")
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
