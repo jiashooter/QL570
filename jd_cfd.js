@@ -1,6 +1,6 @@
 /**
  #京喜财富岛
- 20 7 * * *
+ 20 7 * * * https://raw.githubusercontent.com/wql70255/QL570/main/jd_cfd.js
  * 包含雇佣导游，建议每小时1次
  */
 
