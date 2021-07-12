@@ -1,6 +1,6 @@
 /*
 #财富岛热气球挂后台
-40 7 * * *
+40 7 * * * https://raw.githubusercontent.com/wql70255/QL570/main/jd_cfd_loop.js
 */
 
 import {format} from 'date-fns';
