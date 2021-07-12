@@ -1,4 +1,7 @@
-
+/*
+#新版财富岛cfd_new
+12 4 * * * https://raw.githubusercontent.com/wql70255/QL570/main/jd_cfd_new.js
+*/
 const CryptoJS = require('crypto-js');
 const USER_AGENT = require('./USER_AGENTS').USER_AGENT;
 const axios = require('axios');
