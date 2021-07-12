@@ -1,6 +1,7 @@
-/**
- * 财富岛热气球挂后台
- */
+/*
+#财富岛热气球挂后台
+40 7 * * *
+*/
 
 import {format} from 'date-fns';
 import axios from 'axios';
