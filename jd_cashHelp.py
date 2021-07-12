@@ -1,3 +1,6 @@
+/*
+#助力签到领现金
+2 0-23/4 * * *
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*
 '''
@@ -8,7 +11,7 @@ Date: 2021/7/4 上午09:35
 TG交流 https://t.me/topstyle996
 TG频道 https://t.me/TopStyle2021
 '''
-
+*/
 #ck 优先读取【JDCookies.txt】 文件内的ck  再到 ENV的 变量 JD_COOKIE='ck1&ck2' 最后才到脚本内 cookies=ck
 cookies = ''
 # 设置被助力的账号可填用户名 或 pin的值不要;
