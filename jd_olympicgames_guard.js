@@ -1,5 +1,5 @@
 /*
-#全民运动会守卫红包
+全民运动会守卫红包
 0 11 * * * https://raw.githubusercontent.com/wql70255/QL570/main/jd_olympicgames_guard.js
 更新时间：2021-7-10
 活动入口：首页右侧下方
