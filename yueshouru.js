@@ -1,10 +1,7 @@
 /*
 京东月资产变动通知
-20 19 * * *
+cron "2 9 * * 6" 
 更新时间：2021-06-16 12:00
-脚本兼容: QuantumultX, Surge,Loon, JSBox, Node.js
-=================================Quantumultx=========================
-[
  */
 const $ = new Env('京东月资产变动通知');
 const notify = $.isNode() ? require('./sendNotify') : '';
