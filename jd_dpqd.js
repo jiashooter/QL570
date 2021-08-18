@@ -1,11 +1,10 @@
 /*
 店铺签到，各类店铺签到，有新的店铺直接添加token即可
 搬运cui521大佬脚本，请勿外传！！！
-cron "2 9 * * *" 
 */
 const $ = new Env('店铺签到');
 
-const notify = $.isNode() ? require('./sendNotify') : '';
+
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
@@ -21,23 +20,21 @@ const token = [
   'EFFD0BF4069A8B6882A55FB07ACDA60F',
   '26387788BAE04FCC685B106BFDFA7675',
   '46534679506709BBCB1832DE399A969A',
+  '7B3581A8967257F41B5784DDB82E5123',
   '93830BBF47902063E14135B2822BAA0C',
   'CE88E5242954E4B97D0B8B387D8B5607',
+  '0D4DBA95792917F93626E8A31604754E',
+  'B6ADD43C62C27D2473BF413C5EFE65C9',
   '5A80A78E6AE61D6DFD7AD1757A430487',
   '564B04E590F3F04F56A6C8B6C6BBABAC',
+  'F6C0C8F08D24FBAFF4AA27755D12BB23',
   '434DAE741BE9A0490553DAF956FEFE65',
   'B15EC4C26506B99CDDB6023EDFCF9F49',
   '77B06BE4BC3332D9674AD871C7DF5065',
+  '1F78C099BAD778319E5FBD3277ADC359',
   'BE39683048A55D29F61AC1EF691024A2',
   '0EC261B208C33C8B91CBF64841CFABAD',
   '2215A038745A22795855358B459F32BB',
-  'A0FAA91B911212F5FBC41DCE2A895147',
-  'DE73FD2AA5DCA38C3CEF3BD153FB4C24',
-  '434DAE741BE9A0490553DAF956FEFE65',//1天，10豆；3天，50豆；10天，100豆；
-  '0D9FBEE0928A7010A3A217A08D8E0F55',//7天，100豆；
-  'E528907E4FEC60FC75CBFE1BAFA95F8D',//7天，40豆；15天，100豆；30天，100豆;
-  '532B4C977CA2066A107C034B9CB3A9DD',//2天，5豆；6天，20豆；8天，50豆；
-  '9BABD41E5674FD5791963D5366BEC634',//每日，1豆；5天，10豆；21天，100豆;
 ]
 //IOS等用户直接用NobyDa的jd cookie
 
@@ -75,7 +72,7 @@ if ($.isNode()) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
 
         if ($.isNode()) {
-          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+          
         }
         continue
       }
@@ -287,13 +284,15 @@ function taskUrl(token, venderId) {
     })
   })
 }
-
 async function showMsg() {
   if ($.isNode()) {
-    $.msg($.name, '', `【京东账号${$.index}】${$.nickName}\n${message}`);
-    await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】${$.nickName}\n${message}`);
+    $.msg($.name, '', `店铺签到的通知没啥用，就不通知各位韭菜了`);
+ 
   }
+
 }
+
+
 
 function TotalBean() {
   return new Promise(async resolve => {
