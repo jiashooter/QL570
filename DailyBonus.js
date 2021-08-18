@@ -103,7 +103,7 @@ hostname = ms.jr.jd.com, me-api.jd.com
 
 *************************/
 
-new Env('京东多合一签到');
+const $ = new Env('京东资产变动通知');
 
 
 var LogDetails = true; //是否开启响应日志, true则开启
