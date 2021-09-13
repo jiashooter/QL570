@@ -49,6 +49,7 @@ message = ""
       getUA()
       console.log(`\n\n******开始【京东账号${$.index}】${$.UserName}*********\n`);
       await run();
+      await $.wait(33333)
       if(i == 0 && !$.actorUuid) break
     }
   }
