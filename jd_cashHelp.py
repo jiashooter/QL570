@@ -12,7 +12,7 @@ update 2021.7.24 18:02
 建议cron "0 0 * * *"   python3 jd_cashHelp.py
 
 '''
-new Env('签到领现金-助力');
+
 #ck 优先读取【JDCookies.txt】 文件内的ck  再到 ENV的 变量 JD_COOKIE='ck1&ck2' 最后才到脚本内 cookies=ck
 cookies = ''
 # 设置被助力的账号可填用户名 或 pin的值不要; env 设置 export cash_zlzh="用户1&用户N"
