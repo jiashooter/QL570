@@ -3,15 +3,17 @@
 =================================Quantumultx=========================
 [task_local]
 #城城领现金
-0 0-23/1 * * * gua_city.js, tag=城城领现金, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+0 0-23/5,22 * 10 * gua_city.js, tag=城城领现金, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
  */
 const $ = new Env('城城领现金');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
-const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const jdCookieNode = $.isNode() ? require('./jdCookie1.js') : '';
 //自动抽奖 ，环境变量  JD_CITY_EXCHANGE
-let exchangeFlag = $.getdata('jdJxdExchange') || !!0;//是否开启自动抽奖，建议活动快结束开启，默认关闭
+let exchangeFlag = $.getdata('jdJxdExchange') || "false";//是否开启自动抽奖，建议活动快结束开启，默认关闭
+exchangeFlag = $.isNode() ? (process.env.jdJxdExchange ? process.env.jdJxdExchange : `${exchangeFlag}`) : ($.getdata('jdJxdExchange') ? $.getdata('jdJxdExchange') : `${exchangeFlag}`);
+
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
 
@@ -25,6 +27,9 @@ if ($.isNode()) {
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let inviteCodes = [
+  'yTh0HnExB0l26zRCiF5_muBlFjc5_JCud55QPBsu0IJTo8k',//自己号没超过三个的麻烦大哥们把我的助力码留下来吧😃
+    'RtGKze_2Rg_2KtCYEdE31CLAiPkH9yqp2vwtJMfVmUO2FM77zA',
+	'RtGKmrjjCW_bBufiQY1Rmq-j9PfQhN8Ef50Mad0H9RWJ0HFt',
 ]
 $.shareCodesArr = [];
 
@@ -34,7 +39,7 @@ $.shareCodesArr = [];
     return;
   }
   // await requireConfig();
-  if (exchangeFlag) {
+  if (exchangeFlag+"" == "true") {
     console.log(`脚本自动抽奖`)
   } else {
     console.log(`脚本不会自动抽奖，建议活动快结束开启，默认关闭(在10.29日自动开启抽奖),如需自动抽奖请设置环境变量  JD_CITY_EXCHANGE 为true`);
@@ -46,7 +51,7 @@ $.shareCodesArr = [];
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       $.index = i + 1;
       await getUA()
-      await getInviteId();
+      //await getInviteId();
     }
   }
   if(Object.getOwnPropertyNames($.inviteIdCodesArr).length > 0){
@@ -94,7 +99,7 @@ $.shareCodesArr = [];
       }
       // await getInfo($.newShareCodes[i], true)
       await getInviteInfo();//雇佣
-      if (exchangeFlag) {
+      if (exchangeFlag+"" == "true") {
         const res = await city_lotteryAward();//抽奖
         if (res && res > 0) {
           for (let i = 0; i < new Array(res).fill('').length; i++) {
@@ -191,9 +196,17 @@ function getInfo(inviteId, flag = false) {
             data = JSON.parse(data);
             if (data.code === 0) {
               if (data.data && data['data']['bizCode'] === 0) {
+                console.log(`待提现:￥${data.data.result.userActBaseInfo.poolMoney}`)
                 for(let vo of data.data.result && data.data.result.popWindows || []){
                   if (vo && vo.type === "dailycash_second") {
                     await receiveCash()
+                    await $.wait(2*1000)
+                  }
+                }
+                for(let vo of data.data.result && data.data.result.mainInfos || []){
+                  if (vo && vo.remaingAssistNum === 0 && vo.status === "1") {
+                    console.log(vo.roundNum)
+                    await receiveCash(vo.roundNum)
                     await $.wait(2*1000)
                   }
                 }
@@ -231,7 +244,7 @@ function getInfo(inviteId, flag = false) {
 }
 function receiveCash(roundNum = '') {
   let body = {"cashType":2}
-  if(roundNum) body = {...body,"roundNum":roundNum}
+  if(roundNum) body = {"cashType":1,"roundNum":roundNum}
   return new Promise((resolve) => {
     $.post(taskPostUrl("city_receiveCash",body), async (err, resp, data) => {
       try {
@@ -306,11 +319,12 @@ function city_lotteryAward() {
 function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
-    $.get({url: ``, 'timeout': 10000}, (err, resp, data) => {
+    $.get({url: `https://jd.sm11.tk/city`, 'timeout': 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`助力池 API请求失败，请检查网路重试`)
+
         } else {
           if (data) {
             data = JSON.parse(data);
@@ -334,11 +348,11 @@ function shareCodesFormat() {
     if ($.shareCodesArr[$.index - 1]) {
       $.newShareCodes = $.shareCodesArr[$.index - 1].split('@');
     }
-    if($.index == 1) $.newShareCodes = [...$.newShareCodes,...inviteCodes]
+    if($.index != 0) $.newShareCodes = [...inviteCodes]
     try{
       const readShareCodeRes = await readShareCode();
-      if (readShareCodeRes && readShareCodeRes.code === 200) {
-        $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
+      if (readShareCodeRes && readShareCodeRes.code != 200) {
+        $.newShareCodes = [...new Set([...$.newShareCodes/*, ...(readShareCodeRes.data || [])*/])];
       }
     } catch (e) {
       console.log(e);
