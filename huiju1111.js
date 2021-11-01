@@ -29,7 +29,7 @@ if ($.isNode()) {
     authorCodeList = await getAuthorCodeList('https://gitee.com/fatelight/dongge/raw/master/dongge/lzdz1_go2.json')
     if(authorCodeList === '404: Not Found'){
         authorCodeList = [
-            '',
+            '38bf3aea817f49cf98b91289453bb56a',
         ]
     }
 
