@@ -7,7 +7,7 @@
 # export kois="卡步vs奇诺&jd_53b75edc26542&jd_bdwxUHHTHfiR&jd_48d41a66319ee"
 # 11/4 11:23 增加自动开红包
 
-export kois="卡步vs奇诺 & jd_53b75edc26542 & jd_bdwxUHHTHfiR & jd_48d41a66319ee"
+
 import os,json,random,time,re,string,functools,asyncio
 import sys
 sys.path.append('../../tmp')
